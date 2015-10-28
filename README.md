@@ -64,6 +64,11 @@ As usual, configuration is passed through environment variables.
 - `LOG_GROUP_NAME` - Cloudwatch logs group name. Defaults to `logstash`.
 - `LOG_STREAM_NAME` - Cloudwatch logs stream name. Defaults to `hostname()`.
 
+### Gelf Logs
+
+- OUTPUT_GELF - whether to enable this output. Defaults to `false`
+- GELF_HOST - the hostname of a gelf server to send the messages to 
+- GELF_PORT - the port for use on the gelf server. Default to 12201
 
 ## Running
 
@@ -76,5 +81,17 @@ $ docker run -ti --rm \
     -e AWS_REGION=us-west-1 \
     -e AWS_ACCESS_KEY_ID=<REPLACE ME> \
     -e AWS_SECRET_ACCESS_KEY=<REPLACE ME> \
+    quay.io/ukhomeofficedigital/logstash-kubernetes:latest
+```
+
+```
+$ docker run -ti --rm \
+    -v /var/lib/logstash-kubernetes:/var/lib/logstash \
+    -v /var/log/journal:/var/log/journal:ro \
+    -v /var/lib/docker/containers:/var/lib/docker/containers \
+    -v /var/log/containers:/var/log/containers \
+    -e OUTPUT_CLOUDWATCH=false \
+    -e OUTPUT_GELF=true \
+    -e GELF_HOST=<REPLACE ME> \
     quay.io/ukhomeofficedigital/logstash-kubernetes:latest
 ```
