@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: logstash-es
+  namespace: kube-system
+  labels:
+    tier: logging
+    app: logstash-es
+    version: v1
+spec:
+  template:
+    metadata:
+      name: logstash-elasticsearch
+      namespace: kube-system
+      labels:
+        k8s-app: logstash-logging
+    spec:
+      containers:
+        - name: logstash-elasticsearch
+          image: quay.io/ukhomeofficedigital/logstash-kubernetes:v0.4.1
+          resources:
+            limits:
+              memory: 750Mi
+            requests:
+              cpu: 100m
+              memory: 500Mi
+          env:
+            - name: ELASTICSEARCH_HOST
+              value: elasticsearch-logging:9200
+            - name: OUTPUT_ELASTICSEARCH
+              value: "true"
+            - name: LS_HEAP_SIZE
+              value: 500m
+          volumeMounts:
+            - name: logstash-kubernetes
+              mountPath: /var/lib/logstash
+            - name: var-log-journal
+              mountPath: /var/log/journal
+              readOnly: true
+            - name: var-lib-docker-containers
+              mountPath: /var/lib/docker/containers
+              readOnly: true
+            - name: var-log-containers
+              mountPath: /var/log/containers
+              readOnly: true
+          terminationGracePeriodSeconds: 30
+      volumes:
+        - name: logstash-kubernetes
+          hostPath:
+            path: /var/lib/logstash-kubernetes
+        - name: var-log-journal
+          hostPath:
+            path: /var/log/journal
+        - name: var-lib-docker-containers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: var-log-containers
+          hostPath:
+            path: /var/log/containers
