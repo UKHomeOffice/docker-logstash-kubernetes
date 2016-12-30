@@ -12,6 +12,7 @@ RUN wget -q https://download.elastic.co/logstash/logstash/logstash-${LS_VERSION}
 RUN /logstash/bin/logstash-plugin install --version 2.7.1 logstash-output-elasticsearch && \
     /logstash/bin/logstash-plugin install logstash-filter-kubernetes && \
     /logstash/bin/logstash-plugin install logstash-input-journald && \
+    /logstash/bin/logstash-plugin install logstash-input-http && \
     /logstash/bin/logstash-plugin install --version 2.0.0.pre1 logstash-output-cloudwatchlogs
 
 COPY run.sh /run.sh
