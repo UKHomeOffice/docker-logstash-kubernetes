@@ -11,6 +11,7 @@ RUN wget -q https://artifacts.elastic.co/downloads/logstash/logstash-${LS_VERSIO
 
 RUN /logstash/bin/logstash-plugin install --version 6.2.1 logstash-output-elasticsearch && \
     /logstash/bin/logstash-plugin install --version 0.3.1 logstash-filter-kubernetes && \
+    /logstash/bin/logstash-plugin install --version 1.0.0 logstash-filter-truncate && \
     /logstash/bin/logstash-plugin install --version 2.0.0 logstash-input-journald
 
 COPY run.sh /run.sh
