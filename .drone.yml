@@ -17,12 +17,28 @@ pipeline:
     image: docker:1.12
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=quay.io
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:latest
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}
-      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:latest
-      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}
+      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} "${DOCKER_REPO}"
+      - docker tag image "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:latest"
+      - docker tag image "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}"
+      - docker push "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:latest"
+      - docker push "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}"
+    when:
+      event: push
+      branch: master
+
+  latest_image_to_artifactory:
+    image: docker:1.12
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
+    commands:
+      - docker login -u="lev-web-robot" -p=${DOCKER_ARTIFACTORY_PASSWORD} "${DOCKER_REPO}"
+      - docker tag image "${DOCKER_REPO}/logstash-kubernetes:latest"
+      - docker tag image "${DOCKER_REPO}/logstash-kubernetes:${DRONE_COMMIT_SHA}"
+      - docker push "${DOCKER_REPO}/logstash-kubernetes:latest"
+      - docker push "${DOCKER_REPO}/logstash-kubernetes:${DRONE_COMMIT_SHA}"
     when:
       event: push
       branch: master
@@ -31,10 +47,23 @@ pipeline:
     image: docker:1.12
     environment:
       - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=quay.io
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}
-      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}
+      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} "${DOCKER_REPO}"
+      - docker tag image "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}"
+      - docker push "${DOCKER_REPO}/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}"
+    when:
+      event: tag
+
+  tag_image_to_artifactory:
+    image: docker:1.12
+    environment:
+      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_REPO=artifactory-internal.digital.homeoffice.gov.uk
+    commands:
+      - docker login -u="lev-web-robot" -p=${DOCKER_ARTIFACTORY_PASSWORD} "${DOCKER_REPO}"
+      - docker tag image "${DOCKER_REPO}/logstash-kubernetes:${DRONE_TAG}"
+      - docker push "${DOCKER_REPO}/logstash-kubernetes:${DRONE_TAG}"
     when:
       event: tag
 
