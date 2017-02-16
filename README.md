@@ -39,6 +39,10 @@ As usual, configuration is passed through environment variables.
 - `ELASTICSEARCH_FLUSH_SIZE` - Bulk index flush size. Default: `500`
 - `ELASTICSEARCH_IDLE_FLUSH_TIME` - Bulk index idle flush time in seconds. Default: `1`
 - `ELASTICSEARCH_HOST` - ElasticSearch host, can be comma separated. Default: `127.0.0.1:9200`.
+- `ELASTICSEARCH_SSL_ENABLED` - Elasticsearch SSL flag. Default: `false`.
+- `ELASTICSEARCH_CERTIFICATE_VERIFICATION` - Elasticsearch SSL cerificate verification. Default: `true`.
+- `ELASTICSEARCH_USER` - Elasticseach basic auth username. Default: `""`.
+- `ELASTICSEARCH_PASSWORD` - Elasticsarch basic auth password. Default: `""`.
 - `ELASTICSEARCH_INDEX_SUFFIX` - ElasticSearch index suffix. Default: `""`.
 - `LOGSTASH_ARGS` - Sets additional logstash command line arguments.
 
