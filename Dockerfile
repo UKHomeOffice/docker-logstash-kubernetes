@@ -11,7 +11,8 @@ RUN wget -q https://artifacts.elastic.co/downloads/logstash/logstash-${LS_VERSIO
 
 RUN JARS_SKIP=true /logstash/bin/logstash-plugin install --version 6.2.4 logstash-output-elasticsearch && \
     JARS_SKIP=true /logstash/bin/logstash-plugin install --version 0.3.1 logstash-filter-kubernetes && \
-    JARS_SKIP=true /logstash/bin/logstash-plugin install --version 2.0.0 logstash-input-journald
+    JARS_SKIP=true /logstash/bin/logstash-plugin install --version 2.0.0 logstash-input-journald && \
+    JARS_SKIP=true /logstash/bin/logstash-plugin install --version 4.0.5 logstash-output-s3
 
 COPY run.sh /run.sh
 COPY conf.d/ /logstash/conf.d/
