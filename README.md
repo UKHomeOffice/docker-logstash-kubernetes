@@ -40,6 +40,7 @@ As usual, configuration is passed through environment variables.
 - `ELASTICSEARCH_IDLE_FLUSH_TIME` - Bulk index idle flush time in seconds. Default: `1`
 - `ELASTICSEARCH_HOST` - ElasticSearch host, can be comma separated. Default: `127.0.0.1:9200`.
 - `ELASTICSEARCH_SSL_ENABLED` - Elasticsearch SSL flag. Default: `false`.
+- `ELASTICSEARCH_CA_CERTIFICATE_PATH` - The path to the .pem file that contains the Certificate Authority’s certificate.
 - `ELASTICSEARCH_CERTIFICATE_VERIFICATION` - Elasticsearch SSL cerificate verification. Default: `true`.
 - `ELASTICSEARCH_USER` - Elasticseach basic auth username. Default: `""`.
 - `ELASTICSEARCH_PASSWORD` - Elasticsarch basic auth password. Default: `""`.
