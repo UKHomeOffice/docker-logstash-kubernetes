@@ -1,47 +1,48 @@
+---
 pipeline:
+
   build_docker_image:
-    image: docker:1.12
+    image: docker:17.07.0
+    secrets: 
+      - docker_password
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker build -t image .
+      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p="$${DOCKER_PASSWORD}" quay.io
+      - docker build -t logstash:$${DRONE_COMMIT_SHA} .
 
   test_run:
-    image: docker:1.12
+    image: docker:17.07.0
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker run -i -e LOGSTASH_ARGS=-t --rm image
+      - docker run -i -e LOGSTASH_ARGS=-t --rm logstash:$${DRONE_COMMIT_SHA}
 
   latest_image_to_quay:
-    image: docker:1.12
+    image: docker:17.07.0
+    secrets: 
+      - docker_password
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:latest
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}
+      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p="$${DOCKER_PASSWORD}" quay.io
+      - docker tag logstash:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/logstash-kubernetes:latest
+      - docker tag logstash:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/logstash-kubernetes:$${DRONE_COMMIT_SHA}
       - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:latest
-      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_COMMIT_SHA}
+      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:$${DRONE_COMMIT_SHA}
     when:
       event: push
       branch: master
 
   tag_image_to_quay:
     image: docker:1.12
+    secrets: 
+      - docker_password
     environment:
-      - DOCKER_HOST=tcp://127.0.0.1:2375
+      - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
-      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p=${DOCKER_PASSWORD} quay.io
-      - docker tag image quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}
-      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:${DRONE_TAG}
+      - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p="$${DOCKER_PASSWORD}" quay.io
+      - docker tag logstash:$${DRONE_COMMIT_SHA} quay.io/ukhomeofficedigital/logstash-kubernetes:$${DRONE_TAG}
+      - docker push quay.io/ukhomeofficedigital/logstash-kubernetes:$${DRONE_TAG}
     when:
       event: tag
-
-services:
-  dind:
-    image: docker:1.12-dind
-    privileged: true
-    command:
-      - "-s"
-      - "overlay"

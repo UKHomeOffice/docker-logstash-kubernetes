@@ -21,8 +21,6 @@ export HOME=/var/lib/logstash
 : ${ELASTICSEARCH_PASSWORD:=}
 
 : ${ELASTICSEARCH_INDEX_SUFFIX:=""}
-: ${ELASTICSEARCH_FLUSH_SIZE:=500}
-: ${ELASTICSEARCH_IDLE_FLUSH_TIME:=1}
 
 
 if [[ ${INPUT_JOURNALD} != 'true' ]]; then
@@ -46,8 +44,6 @@ else
       -e "s/%ELASTICSEARCH_USER%/${ELASTICSEARCH_USER}/" \
       -e "s/%ELASTICSEARCH_PASSWORD%/${ELASTICSEARCH_PASSWORD}/" \
       -e "s/%ELASTICSEARCH_INDEX_SUFFIX%/${ELASTICSEARCH_INDEX_SUFFIX}/" \
-      -e "s/%ELASTICSEARCH_FLUSH_SIZE%/${ELASTICSEARCH_FLUSH_SIZE}/" \
-      -e "s/%ELASTICSEARCH_IDLE_FLUSH_TIME%/${ELASTICSEARCH_IDLE_FLUSH_TIME}/" \
       -i /logstash/conf.d/20_output_kubernetes_elasticsearch.conf \
       -i /logstash/conf.d/20_output_kubernetes_audit_elasticsearch.conf \
       -i /logstash/conf.d/20_output_journald_elasticsearch.conf
