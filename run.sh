@@ -11,6 +11,7 @@ export HOME=/var/lib/logstash
 
 : ${INPUT_JOURNALD:=true}
 : ${INPUT_KUBERNETES_AUDIT:=true}
+: ${INPUT_KUBERNETES:=true}
 
 : ${OUTPUT_ELASTICSEARCH:=true}
 : ${ELASTICSEARCH_HOST:=127.0.0.1:9200}
@@ -29,6 +30,10 @@ fi
 
 if [[ ${INPUT_KUBERNETES_AUDIT} != 'true' ]]; then
   rm -f /logstash/conf.d/10_input_kubernetes_audit.conf
+fi
+
+if [[ ${INPUT_KUBERNETES} != 'true' ]]; then
+  rm -f /logstash/conf.d/10_input_kubernetes.conf
 fi
 
 
