@@ -45,6 +45,7 @@ As usual, configuration is passed through environment variables.
 - `ELASTICSEARCH_INDEX_SUFFIX` - ElasticSearch index suffix. Default: `""`.
 - `LOGSTASH_ARGS` - Sets additional logstash command line arguments.
 
+For Kubernetes audit logs it may be necessary to increase `index.mapping.total_fields.limit`. This can be achieved with Elasticsearch curator [`index_settings` action](https://www.elastic.co/guide/en/elasticsearch/client/curator/5.1/index_settings.html).
 
 ## Running
 
