@@ -5,7 +5,7 @@ RUN dnf upgrade -y -q && \
     dnf install -y -q java-headless which hostname tar wget && \
     dnf clean all
 
-ENV LS_VERSION 5.6.9
+ENV LS_VERSION 5.6.10
 
 RUN wget -q https://artifacts.elastic.co/downloads/logstash/logstash-${LS_VERSION}.tar.gz -O - | tar -xzf -; \
   mv logstash-${LS_VERSION} /logstash
