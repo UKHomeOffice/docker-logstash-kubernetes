@@ -21,9 +21,9 @@ export HOME=/var/lib/logstash
 : ${ELASTICSEARCH_USER:=}
 : ${ELASTICSEARCH_PASSWORD:=}
 : ${ELASTICSEARCH_HTTP_COMPRESSION_ENABLED:=true}
+: ${ELASTICSEARCH_FLUSH_SIZE:=}
 
 : ${ELASTICSEARCH_INDEX_SUFFIX:=""}
-
 
 if [[ ${INPUT_JOURNALD} != 'true' ]]; then
   rm -f /logstash/conf.d/10_input_journald.conf
@@ -35,6 +35,13 @@ fi
 
 if [[ ${INPUT_KUBERNETES} != 'true' ]]; then
   rm -f /logstash/conf.d/10_input_kubernetes.conf
+fi
+
+# See important information in README related to the setting below.
+if [[ -z ${ELASTICSEARCH_FLUSH_SIZE} ]]; then
+  ELASTICSEARCH_FLUSH_SIZE_CONFIG=''
+else
+  ELASTICSEARCH_FLUSH_SIZE_CONFIG="flush_size => ${ELASTICSEARCH_FLUSH_SIZE}"
 fi
 
 
@@ -51,6 +58,7 @@ else
       -e "s/%ELASTICSEARCH_USER%/${ELASTICSEARCH_USER}/" \
       -e "s/%ELASTICSEARCH_PASSWORD%/${ELASTICSEARCH_PASSWORD}/" \
       -e "s/%ELASTICSEARCH_INDEX_SUFFIX%/${ELASTICSEARCH_INDEX_SUFFIX}/" \
+      -e "s/%ELASTICSEARCH_FLUSH_SIZE_CONFIG%/${ELASTICSEARCH_FLUSH_SIZE_CONFIG}/" \
       -i /logstash/conf.d/20_output_kubernetes_elasticsearch.conf \
       -i /logstash/conf.d/20_output_kubernetes_audit_elasticsearch.conf \
       -i /logstash/conf.d/20_output_journald_elasticsearch.conf
