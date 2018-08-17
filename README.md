@@ -33,6 +33,7 @@ As usual, configuration is passed through environment variables.
 - `LS_HEAP_SIZE` - logstash JVM heap size. Defaults to `500m`.
 - `LS_LOG_LEVEL` - Logstash log level. Default: `error`.
 - `LS_PIPELINE_BATCH_SIZE` - Size of batches the pipeline is to work in. Default: `125`
+- `INPUT_KUBERNETES` - Enable kubernetes logs ingestion. Default: `true`.
 - `INPUT_JOURNALD` - Enable logs ingestion from journald. Default: `true`.
 - `INPUT_KUBERNETES_AUDIT` - Enable kubernetes audit logs ingestion. Default: `true`.
 - `OUTPUT_ELASTICSEARCH` - Enable logs output to ElasticSearch. Default `true`.
@@ -40,6 +41,7 @@ As usual, configuration is passed through environment variables.
 - `ELASTICSEARCH_SSL_ENABLED` - Elasticsearch SSL flag. Default: `false`.
 - `ELASTICSEARCH_CA_CERTIFICATE_PATH` - The path to the .pem file that contains the Certificate Authority’s certificate.
 - `ELASTICSEARCH_CERTIFICATE_VERIFICATION` - Elasticsearch SSL cerificate verification. Default: `true`.
+- `ELASTICSEARCH_HTTP_COMPRESSION_ENABLED` - Elasticsearch HTTP compression. Default: `true`.
 - `ELASTICSEARCH_USER` - Elasticseach basic auth username. Default: `""`.
 - `ELASTICSEARCH_PASSWORD` - Elasticsarch basic auth password. Default: `""`.
 - `ELASTICSEARCH_INDEX_SUFFIX` - ElasticSearch index suffix. Default: `""`.
