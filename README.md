@@ -34,6 +34,7 @@ As usual, configuration is passed through environment variables.
 - `LS_LOG_LEVEL` - Logstash log level. Default: `error`.
 - `LS_PIPELINE_BATCH_SIZE` - Size of batches the pipeline is to work in. Default: `125`
 - `INPUT_KUBERNETES` - Enable kubernetes logs ingestion. Default: `true`.
+- `INPUT_KUBERNETES_EXCLUDE_PATTERNS` - Comma separated list of log file path patterns to be excluded from processing. Example: `"*.gz", "*.tar"`. Default: `""`.
 - `INPUT_JOURNALD` - Enable logs ingestion from journald. Default: `true`.
 - `INPUT_KUBERNETES_AUDIT` - Enable kubernetes audit logs ingestion. Default: `true`.
 - `OUTPUT_ELASTICSEARCH` - Enable logs output to Elasticsearch. Default `true`.

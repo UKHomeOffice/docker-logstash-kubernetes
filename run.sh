@@ -9,6 +9,7 @@ export HOME=/var/lib/logstash
 : ${LS_OPEN_FILES:=8192}
 : ${LS_PIPELINE_BATCH_SIZE:=125}
 
+: ${INPUT_KUBERNETES_EXCLUDE_PATTERNS:=}
 : ${INPUT_JOURNALD:=true}
 : ${INPUT_KUBERNETES_AUDIT:=true}
 : ${INPUT_KUBERNETES:=true}
@@ -24,6 +25,15 @@ export HOME=/var/lib/logstash
 : ${ELASTICSEARCH_FLUSH_SIZE:=}
 
 : ${ELASTICSEARCH_INDEX_SUFFIX:=""}
+
+# exclude certain kubernetes log files if provided
+if [[ ${INPUT_KUBERNETES_EXCLUDE_PATTERNS} ]]; then
+  sed -e "s/%INPUT_KUBERNETES_EXCLUDE_PATTERNS%/exclude => [ ${INPUT_KUBERNETES_EXCLUDE_PATTERNS} ]/" \
+      -i /logstash/conf.d/10_input_kubernetes.conf
+else
+  sed -e "s/%INPUT_KUBERNETES_EXCLUDE_PATTERNS%//" \
+      -i /logstash/conf.d/10_input_kubernetes.conf
+fi
 
 if [[ ${INPUT_JOURNALD} != 'true' ]]; then
   rm -f /logstash/conf.d/10_input_journald.conf
