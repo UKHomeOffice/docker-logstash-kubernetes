@@ -8,7 +8,7 @@ export HOME=/var/lib/logstash
 : ${LS_LOG_DIR:=/var/lib/logstash}
 : ${LS_OPEN_FILES:=8192}
 : ${LS_PIPELINE_BATCH_SIZE:=125}
-
+: ${LS_MONITORING_ENABLE:=false}
 : ${INPUT_KUBERNETES_EXCLUDE_PATTERNS:=}
 : ${INPUT_JOURNALD:=true}
 : ${INPUT_KUBERNETES_AUDIT:=true}
@@ -16,6 +16,7 @@ export HOME=/var/lib/logstash
 
 : ${OUTPUT_ELASTICSEARCH:=true}
 : ${ELASTICSEARCH_HOST:=127.0.0.1:9200}
+: ${ELASTICSEARCH_SCHEME:=http}
 : ${ELASTICSEARCH_SSL_ENABLED:=false}
 : ${ELASTICSEARCH_CA_CERTIFICATE_PATH:=/etc/pki/tls/certs/ca-bundle.crt}
 : ${ELASTICSEARCH_CERTIFICATE_VERIFICATION:=true}
@@ -25,6 +26,8 @@ export HOME=/var/lib/logstash
 : ${ELASTICSEARCH_FLUSH_SIZE:=}
 
 : ${ELASTICSEARCH_INDEX_SUFFIX:=""}
+
+[ ${ELASTICSEARCH_SSL_ENABLED} == "true" ] && export ELASTICSEARCH_SCHEME="https"
 
 # exclude certain kubernetes log files if provided
 if [[ ${INPUT_KUBERNETES_EXCLUDE_PATTERNS} ]]; then
@@ -69,6 +72,9 @@ else
       -e "s/%ELASTICSEARCH_PASSWORD%/${ELASTICSEARCH_PASSWORD}/" \
       -e "s/%ELASTICSEARCH_INDEX_SUFFIX%/${ELASTICSEARCH_INDEX_SUFFIX}/" \
       -e "s/%ELASTICSEARCH_FLUSH_SIZE_CONFIG%/${ELASTICSEARCH_FLUSH_SIZE_CONFIG}/" \
+      -e "s/%ELASTICSEARCH_SCHEME%/${ELASTICSEARCH_SCHEME}/" \
+      -e "s/%LS_MONITORING_ENABLE%/${LS_MONITORING_ENABLE}/" \
+      -i /logstash/config/logstash.yml \
       -i /logstash/conf.d/20_output_kubernetes_elasticsearch.conf \
       -i /logstash/conf.d/20_output_kubernetes_audit_elasticsearch.conf \
       -i /logstash/conf.d/20_output_journald_elasticsearch.conf
