@@ -17,7 +17,7 @@ RUN JARS_SKIP=true /logstash/bin/logstash-plugin install --version 0.3.1 logstas
 COPY run.sh /run.sh
 COPY conf.d/ /logstash/conf.d/
 
-COPY config/log4j2.properties /logstash/config/log4j2.properties
+COPY config/ /logstash/config/
 
 WORKDIR /var/lib/logstash
 VOLUME /var/lib/logstash

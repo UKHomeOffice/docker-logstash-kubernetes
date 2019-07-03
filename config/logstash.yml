@@ -1,0 +1,5 @@
+---
+xpack.monitoring.enabled: %LS_MONITORING_ENABLE%
+xpack.monitoring.elasticsearch.url: %ELASTICSEARCH_SCHEME%://%ELASTICSEARCH_HOST%
+xpack.monitoring.elasticsearch.username: %ELASTICSEARCH_USER%
+xpack.monitoring.elasticsearch.password: %ELASTICSEARCH_PASSWORD%
