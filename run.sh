@@ -5,10 +5,11 @@ export HOME=/var/lib/logstash
 : ${LS_LOG_LEVEL:=error}
 : ${LS_HEAP_SIZE:=500m}
 : ${LS_JAVA_OPTS:=-Djava.io.tmpdir=${HOME}}
-: ${LS_LOG_DIR:=/var/lib/logstash}
 : ${LS_OPEN_FILES:=8192}
 : ${LS_PIPELINE_BATCH_SIZE:=125}
 : ${LS_MONITORING_ENABLE:=false}
+: ${LS_NODE_NAME:=$HOSTNAME}
+: ${LS_HTTP_HOST:=0.0.0.0}
 : ${INPUT_KUBERNETES_EXCLUDE_PATTERNS:=}
 : ${INPUT_JOURNALD:=true}
 : ${INPUT_KUBERNETES_AUDIT:=true}
@@ -74,6 +75,8 @@ else
       -e "s/%ELASTICSEARCH_FLUSH_SIZE_CONFIG%/${ELASTICSEARCH_FLUSH_SIZE_CONFIG}/" \
       -e "s/%ELASTICSEARCH_SCHEME%/${ELASTICSEARCH_SCHEME}/" \
       -e "s/%LS_MONITORING_ENABLE%/${LS_MONITORING_ENABLE}/" \
+      -e "s/%LS_NODE_NAME%/${LS_NODE_NAME}/" \
+      -e "s/%LS_HTTP_HOST%/${LS_HTTP_HOST}/" \
       -i /logstash/config/logstash.yml \
       -i /logstash/conf.d/20_output_kubernetes_elasticsearch.conf \
       -i /logstash/conf.d/20_output_kubernetes_audit_elasticsearch.conf \

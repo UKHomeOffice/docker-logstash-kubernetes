@@ -1,4 +1,6 @@
 ---
+node.name: %LS_NODE_NAME%
+http.host: %LS_HTTP_HOST%
 xpack.monitoring.enabled: %LS_MONITORING_ENABLE%
 xpack.monitoring.elasticsearch.url: %ELASTICSEARCH_SCHEME%://%ELASTICSEARCH_HOST%
 xpack.monitoring.elasticsearch.username: %ELASTICSEARCH_USER%

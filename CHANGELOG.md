@@ -1,10 +1,33 @@
 # CHANGELOG
 
-## 5.6.16-2
+## 6.8.1-1
+
+Upgrades Logstash to version 6.8.1: https://www.elastic.co/guide/en/logstash/6.8/releasenotes.html
+
+Bumps journald plugin version
+
+Installs statsd plugin as no longer part of the standard install.
+
+The following environment variables are ADDED:
+
+* `LS_NODE_NAME`
+* `LS_HTTP_HOST`
+
+Options added to README:
+
+* `LS_JAVA_OPTS`
+
+The following environment variables are REMOVED (unused):
+
+* `LS_LOG_DIR`
+
+## 5.6.16-1
+
+Upgrades Logstash to version 5.6.16: https://www.elastic.co/guide/en/logstash/5.6/releasenotes.html
 
 Added options:
 
-- LS_MONITORING_ENABLE - Whether to enable Logstash xpaxk monitoring. Default: `false`
+- LS_MONITORING_ENABLE - Whether to enable Logstash xpack monitoring. Default: `false`
 - ELASTICSEARCH_SCHEME - Elasticsearch HTTP scheme. Default: `http`.
 
 ### Notes:
@@ -20,3 +43,5 @@ The following, for example, should be removed:
 ```
 
 If in doubt, check Management > Upgrade Assistant > Indices in Kibana, which was added in v5.6, or the deprecation messages in log output.
+
+# END
