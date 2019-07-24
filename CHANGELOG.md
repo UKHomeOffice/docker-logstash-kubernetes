@@ -2,6 +2,7 @@
 
 ## 6.8.1-1
 
+* Upgrades base image to fedora:30
 * Upgrades Logstash to version 6.8.1: https://www.elastic.co/guide/en/logstash/6.8/releasenotes.html
 * Bumps `journald` plugin version
 * Installs `statsd` plugin as no longer part of the standard install.
