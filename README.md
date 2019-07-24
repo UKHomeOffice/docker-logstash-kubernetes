@@ -30,10 +30,13 @@ journal logs from the beginning after a restart, make sure you mount
 
 As usual, configuration is passed through environment variables.
 
-- `LS_HEAP_SIZE` - logstash JVM heap size. Defaults to `500m`.
+- `LS_HEAP_SIZE` - Logstash JVM heap size. Defaults to `500m`.
 - `LS_LOG_LEVEL` - Logstash log level. Default: `error`.
+- `LS_NODE_NAME` - Logstash node name reported to ES if `LS_MONITORING_ENABLE=true`. Default: `$HOSTNAME`
 - `LS_PIPELINE_BATCH_SIZE` - Size of batches the pipeline is to work in. Default: `125`
 - `LS_MONITORING_ENABLE` - Whether to enable Logstash xpack monitoring. Default: `false`
+- `LS_HTTP_HOST` - Listen address. default: `0.0.0.0`.
+- `LS_JAVA_OPTS` - JVM Options. Default: `-Djava.io.tmpdir=${HOME}`
 - `INPUT_KUBERNETES` - Enable kubernetes logs ingestion. Default: `true`.
 - `INPUT_KUBERNETES_EXCLUDE_PATTERNS` - Comma separated list of log file path patterns to be excluded from processing. Example: `"*.gz", "*.tar"`. Default: `""`.
 - `INPUT_JOURNALD` - Enable logs ingestion from journald. Default: `true`.
