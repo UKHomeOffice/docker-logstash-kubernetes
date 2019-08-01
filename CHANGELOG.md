@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 6.8.1-2
+
+* Adds the following environment variables:
+	* `INPUT_KUBERNETES_FILE_CHUNK_COUNT` - [file_chunk_count](https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-file.html#plugins-inputs-file-file_chunk_count). Default: 32.
+	* `INPUT_KUBERNETES_FILE_CHUNK_SIZE` - [file_chunk_size](https://www.elastic.co/guide/en/logstash/6.8/plugins-inputs-file.html#plugins-inputs-file-file_chunk_size). Default: 32768 (32KB).
+
+	By default Logstash will read at most 1MB chunks at a time from each Docker container log file.
+
 ## 6.8.1-1
 
 * Upgrades base image to fedora:30
