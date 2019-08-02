@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.8.1-3
+
+* Removes `ELASTICSEARCH_FLUSH_SIZE` as it's now obsolete.
+
 ## 6.8.1-2
 
 * Adds the following environment variables:
