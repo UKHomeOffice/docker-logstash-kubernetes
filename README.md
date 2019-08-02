@@ -53,8 +53,6 @@ As usual, configuration is passed through environment variables.
 - `ELASTICSEARCH_USER` - Elasticsearch basic auth username. Default: `""`.
 - `ELASTICSEARCH_PASSWORD` - Elasticsarch basic auth password. Default: `""`.
 - `ELASTICSEARCH_INDEX_SUFFIX` - Elasticsearch index suffix. Default: `""`.
-- `ELASTICSEARCH_FLUSH_SIZE` - Elasticsearch output flush size. Default: `Numeric (Optional)`. Once set with numeric value it will take precedence over bytesize based bulk size evaluation in ES output plugin. NOTE: This configuration option is now deprecated however still can be used in the current version of ES output plugin. Use it only when frequently encountering `413 Payload Too Large` errors from ES and no other methods of mitigating that issue help.
-**WARNING:** *THIS WILL BE REMOVED IN ONE OF THE FUTURE RELEASES!*
 - `LOGSTASH_ARGS` - Sets additional logstash command line arguments.
 
 For Kubernetes audit logs it may be necessary to increase `index.mapping.total_fields.limit`. This can be achieved with Elasticsearch curator [`index_settings` action](https://www.elastic.co/guide/en/elasticsearch/client/curator/5.1/index_settings.html).
