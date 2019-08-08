@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 6.8.2-1
+
+* Removes previously added `INPUT_KUBERNETES_FILE_CHUNK_COUNT`, `INPUT_KUBERNETES_FILE_CHUNK_SIZE` environment variables 
+  due to the version of `logstash-input-file` plugin used.
+* Preinstalls `logstash-input-file` plugin v4.0.5 due to log change tracking issues in v.4.1.x.
+* Renames `logstash.yml` config option:
+	`xpack.monitoring.elasticsearch.url` -> `xpack.monitoring.elasticsearch.hosts`
+
 ## 6.8.1-3
 
 * Removes `ELASTICSEARCH_FLUSH_SIZE` as it's now obsolete.

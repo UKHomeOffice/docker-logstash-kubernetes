@@ -12,8 +12,6 @@ export HOME=/var/lib/logstash
 : ${LS_NODE_NAME:=$HOSTNAME}
 : ${LS_HTTP_HOST:=0.0.0.0}
 : ${INPUT_KUBERNETES_EXCLUDE_PATTERNS:=}
-: ${INPUT_KUBERNETES_FILE_CHUNK_COUNT:=32} # 1MB chunks as default chunk size is 32KB
-: ${INPUT_KUBERNETES_FILE_CHUNK_SIZE:=32768} # 32KB
 : ${INPUT_JOURNALD:=true}
 : ${INPUT_KUBERNETES_AUDIT:=true}
 : ${INPUT_KUBERNETES:=true}
@@ -40,10 +38,6 @@ else
   sed -e "s/%INPUT_KUBERNETES_EXCLUDE_PATTERNS%//" \
       -i /logstash/conf.d/10_input_kubernetes.conf
 fi
-
-sed -e "s/%INPUT_KUBERNETES_FILE_CHUNK_COUNT%/${INPUT_KUBERNETES_FILE_CHUNK_COUNT}/" \
-    -e "s/%INPUT_KUBERNETES_FILE_CHUNK_SIZE%/${INPUT_KUBERNETES_FILE_CHUNK_SIZE}/" \
-    -i /logstash/conf.d/10_input_kubernetes.conf
 
 if [[ ${INPUT_JOURNALD} != 'true' ]]; then
   rm -f /logstash/conf.d/10_input_journald.conf
