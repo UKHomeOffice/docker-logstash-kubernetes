@@ -55,6 +55,16 @@ if [[ ${OUTPUT_ELASTICSEARCH} != 'true' ]]; then
   rm -f /logstash/conf.d/20_output_journald_elasticsearch.conf
   rm -f /logstash/conf.d/20_output_kubernetes_elasticsearch.conf
   rm -f /logstash/conf.d/20_output_kubernetes_audit_elasticsearch.conf
+
+  # Remove outputs, however still populate default values for logstash.yml
+  sed -e "s/%ELASTICSEARCH_HOST%/${ELASTICSEARCH_HOST}/" \
+      -e "s/%ELASTICSEARCH_PASSWORD%/${ELASTICSEARCH_PASSWORD}/" \
+      -e "s/%ELASTICSEARCH_SCHEME%/${ELASTICSEARCH_SCHEME}/" \
+      -e "s/%ELASTICSEARCH_USER%/${ELASTICSEARCH_USER}/" \
+      -e "s/%LS_HTTP_HOST%/${LS_HTTP_HOST}/" \
+      -e "s/%LS_MONITORING_ENABLE%/${LS_MONITORING_ENABLE}/" \
+      -e "s/%LS_NODE_NAME%/${LS_NODE_NAME}/" \
+      -i /logstash/config/logstash.yml
 else
   sed -e "s/%ELASTICSEARCH_HOST%/${ELASTICSEARCH_HOST}/" \
       -e "s/%ELASTICSEARCH_SSL_ENABLED%/${ELASTICSEARCH_SSL_ENABLED}/" \
