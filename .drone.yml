@@ -3,13 +3,22 @@ pipeline:
 
   build_docker_image:
     image: docker:17.07.0
-    secrets: 
+    secrets:
       - docker_password
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
     commands:
       - docker login -u="ukhomeofficedigital+drone_docker_logstash" -p="$${DOCKER_PASSWORD}" quay.io
       - docker build -t logstash:$${DRONE_COMMIT_SHA} .
+
+  scan:
+    image: quay.io/ukhomeofficedigital/anchore-submission:latest
+    dockerfile: Dockerfile
+    image_name: logstash:${DRONE_COMMIT_SHA}
+    tolarates: medium
+    fail_on_detection: true
+    when:
+      event: push
 
   test_run:
     image: docker:17.07.0
@@ -20,7 +29,7 @@ pipeline:
 
   latest_image_to_quay:
     image: docker:17.07.0
-    secrets: 
+    secrets:
       - docker_password
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
@@ -36,7 +45,7 @@ pipeline:
 
   tag_image_to_quay:
     image: docker:1.12
-    secrets: 
+    secrets:
       - docker_password
     environment:
       - DOCKER_HOST=tcp://172.17.0.1:2375
