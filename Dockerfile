@@ -1,11 +1,11 @@
-FROM fedora:31
+FROM fedora:30
 
 RUN dnf upgrade -y -q && \
     dnf clean all && \
     dnf install -y -q java-headless which hostname tar wget && \
     dnf clean all
 
-ENV LS_VERSION 6.8.2
+ENV LS_VERSION 7.3.2
 
 RUN wget -q https://artifacts.elastic.co/downloads/logstash/logstash-${LS_VERSION}.tar.gz -O - | tar -xzf -; \
   mv logstash-${LS_VERSION} /logstash
